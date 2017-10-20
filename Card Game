@@ -1,0 +1,98 @@
+PROBLEM STATEMENT
+In this project you are going to model a deck of cards and play a simple game, High Card. In the game High Card, the
+player is given a bank of $50.
+To play the game:
+1. The player is dealt a card.
+2. After receiving their card, the Player bets between [$1 … $5].
+3. The dealer then deals themselves a card.
+4. If the Player has the high card, they win their bet. Note their bet was removed from their bank,
+so how much goes into their bank?
+5. If the Player has the low card, they lose their bet. Note their bet was removed from their bank, so
+how much comes out of their bank?
+6. If both the player and the dealer have the same face (Ace, King, five, etc) the player’s bank is unaffected
+7. The game continues until the Player either loses all their money or until they double their initial bank of
+$50.
+REPORTS
+The steps 1 … 5 comprises a round
+After each round print the player’s card, the dealer’s card, the player’s bet and the player’s bank after their winnings
+or losses are applied.
+After the game is over print “Winner, winner chicken dinner!” if their bank is positive, otherwise print “Sorry for your
+loss, please try again when you have more money”.
+
+
+Code So far
+from random import shuffle
+
+#plays the game
+def playHighCard():
+    Bank = 50
+    deck = createDeck()
+    while True:
+        if len(deck) == 0:
+            deck = createDeck()
+        print ("Bank: $" + str(Bank))
+        playerCard = dealCard(deck)
+        dealerCard = dealCard(deck)
+        Bet = getUserBet()
+        Bank = Bank - Bet
+        print (playerCard)
+        print (dealerCard)
+        score = scoreRound(playerCard, dealerCard, Bet, Bank )
+        Bank = Bank - score
+        end = reportGame(Bank)
+
+# creates the Deck             
+def createDeck():
+    Suit = ["Spade", "Heart", "Club", "Diamond"]
+    Faces = ["two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "Jack", "Queen", "King", "Ace"]
+    card = [Suit, Faces]
+    deck = []
+    for S in Suit:
+        for F in Faces:
+            deck.append([S, F])
+            shuffle(deck)
+    return deck
+
+#Deal the Deck
+def dealCard(deck):
+    deal = deck.pop()
+    return deal
+
+# Gets the Users Bet
+def getUserBet():
+    while True:
+        bet = input("Please bet within the range of $1 - $5 to continue. $")
+        if bet == "1" or bet == "2" or bet == "3" or bet == "4" or bet == "5":
+            break
+    return int(bet)
+
+# Score the Round
+def scoreRound(playerCard, dealerCard, Bet, Bank,):
+    Bank - Bet
+    if playerCard > dealerCard:
+        return  (Bet * 2)
+    elif playerCard < dealerCard:
+        return  Bank + 0
+    elif playerCard == dealerCard:
+        return  Bank + Bet 
+
+# Report the round back to playthegame
+def reportRound(scoreRound,playerCard, dealerCard, Bet, Bank):
+    return scoreRound(playerCard, dealerCard, Bet, Bank)
+
+# report the ending
+def reportGame(Bank):
+    End1 = ("Sorry for your loss, please try again when you have more money.")
+    End2 = ("Winner, winner chicken dinner!")    
+    if Bank == 0:
+        return End1
+    elif Bank == 100:
+        return End2    
+
+# plays the game
+playHighCard() 
+
+comments
+I can not get it to take the users bet out and if they win then it doubles the bet and if the lose then they just lose what they bet and 
+if it ties then the bet gets put back in the bank acount. then I need the game to end when the account goes to 100 or end when the user 
+hits zero?
